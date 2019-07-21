@@ -1,0 +1,38 @@
+{
+  "name": "tic-tac-toe-javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martingaston/tic-tac-toe-javascript.git"
+  },
+  "keywords": [],
+  "author": "github.com/martingaston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martingaston/tic-tac-toe-javascript/issues"
+  },
+  "homepage": "https://github.com/martingaston/tic-tac-toe-javascript#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.1",
+    "jest": "^24.8.0",
+    "lint-staged": "^9.2.0",
+    "prettier": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": ["eslint --fix", "jest --coverage --findRelatedTests", "git add"]
+  }
+}
