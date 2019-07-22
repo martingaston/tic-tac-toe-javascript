@@ -5,6 +5,10 @@ module.exports = class Board {
   }
 
   static update(board, position, mark) {
+    if (position < 1 || position > board.length) {
+      throw new RangeError(`Position must be between 1 and ${board.length}`)
+    }
+
     const leftHalfFinish = position - 1
     const rightHalfStart = position
 
