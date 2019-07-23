@@ -1,58 +1,63 @@
-module.exports = class Board {
-  static new() {
-    const threeByThreeTotalSquares = 9
-    return Array.from({ length: threeByThreeTotalSquares }).fill(null)
+const create = (totalSquares = '9') => {
+  const emptySquare = null
+  return Array.from({ length: totalSquares }).fill(emptySquare)
+}
+
+const update = (board, position, mark) => {
+  if (position < 1 || position > board.length) {
+    throw new RangeError(`Position must be between 1 and ${board.length}`)
   }
 
-  static update(board, position, mark) {
-    if (position < 1 || position > board.length) {
-      throw new RangeError(`Position must be between 1 and ${board.length}`)
-    }
+  return replaceBoardAtPosition(board, mark, position)
+}
 
-    const leftHalfFinish = position - 1
-    const rightHalfStart = position
+const replaceBoardAtPosition = (board, replace, position) => [
+  ...board.slice(0, position - 1),
+  replace,
+  ...board.slice(position),
+]
 
-    return [
-      ...board.slice(0, leftHalfFinish),
-      mark,
-      ...board.slice(rightHalfStart),
-    ]
-  }
+const get = (board, position) => board[positionToArrayIndex(position)] || ''
 
-  static get(board, position) {
-    const zeroIndexedPosition = position - 1
-    return board[zeroIndexedPosition] || ''
-  }
+const positionToArrayIndex = position => position - 1
 
-  static hasWinner(board) {
-    const winningMoves = [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9],
-      [1, 4, 7],
-      [2, 5, 8],
-      [3, 6, 9],
-      [1, 5, 9],
-      [3, 5, 7],
-    ]
+const hasWinner = board => {
+  const winningMoves = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 6, 9],
+    [1, 5, 9],
+    [3, 5, 7],
+  ]
 
-    const get = i => Board.get(board, i)
+  const getFromBoard = i => get(board, i)
 
-    const hasWinningCombination = winningMoves.filter(
+  return (
+    winningMoves.filter(
       move =>
-        get(move[0]) != '' &&
-        get(move[0]) == get(move[1]) &&
-        get(move[1]) == get(move[2])
-    )
+        getFromBoard(move[0]) != '' &&
+        getFromBoard(move[0]) == getFromBoard(move[1]) &&
+        getFromBoard(move[1]) == getFromBoard(move[2])
+    ).length > 0
+  )
+}
 
-    return hasWinningCombination.length > 0 ? true : false
-  }
+const available = board => {
+  const initialValue = []
+  return board.reduce(
+    (available, currentSquare, index) =>
+      currentSquare != null ? available : available.concat(index + 1),
+    initialValue
+  )
+}
 
-  static available(board) {
-    return board.reduce(
-      (available, currentSquare, index) =>
-        currentSquare != null ? available : available.concat(index + 1),
-      []
-    )
-  }
+module.exports = {
+  create,
+  update,
+  get,
+  hasWinner,
+  available,
 }
