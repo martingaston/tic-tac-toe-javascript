@@ -28,6 +28,10 @@
     "lint-staged": "^9.2.0",
     "prettier": "^1.18.2"
   },
+ "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
