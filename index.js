@@ -6,6 +6,8 @@ const io = {
   output: process.stdout,
   write: console.log,
 }
-const options = game.init()
 
-start(options, io)
+const options = game.init()
+const updater = game.update
+
+start(options, updater, io)
