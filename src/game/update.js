@@ -1,5 +1,6 @@
 const board = require('./board')
 const messages = require('./messages')
+const random = require('./ai/random')
 
 const swapPlayer = currentPlayer => (currentPlayer === 'X' ? 'O' : 'X')
 
@@ -11,30 +12,45 @@ const getEndingMessage = (state, currentPlayer) => {
   return messages.draw()
 }
 
-module.exports = (position, options) => {
+const update = (position, options) => {
   const newState = board.update(options.state, position, options.currentPlayer)
-  const nextPlayer = swapPlayer(options.currentPlayer)
-  const isActive =
-    !board.hasWinner(newState) && board.available(newState).length > 0
 
-  if (!isActive) {
-    const ending = getEndingMessage(newState, options.currentPlayer)
-    return {
-      state: newState,
-      isActive: false,
-      messages: {
-        ending,
-      },
-    }
+  if (gameIsOver(newState)) {
+    return gameOver(newState, options.currentPlayer)
   }
 
+  if (options.mode === 'ai' && swapPlayer(options.currentPlayer) === 'O') {
+    return update(
+      random.chooseMove(board, newState),
+      nextMove(newState, options)
+    )
+  }
+
+  return nextMove(newState, options)
+}
+
+const gameIsOver = state =>
+  board.hasWinner(state) || board.available(state).length <= 0
+
+const nextMove = (state, options) => {
+  const nextPlayer = swapPlayer(options.currentPlayer)
   return {
     ...options,
-    state: newState,
+    state,
     currentPlayer: nextPlayer,
-    isActive,
+    isActive: true,
     messages: {
       turn: messages.turn(nextPlayer),
     },
   }
 }
+
+const gameOver = (state, currentPlayer) => ({
+  state,
+  isActive: false,
+  messages: {
+    ending: getEndingMessage(state, currentPlayer),
+  },
+})
+
+module.exports = update

@@ -61,4 +61,12 @@ describe('the update function', () => {
 
     expect(turnNineCross.isActive).toEqual(false)
   })
+
+  it('plays an ai move if ai mode is enabled', () => {
+    const turnZero = game.init('ai')
+    const turnOneCross = update(1, turnZero)
+
+    expect(turnOneCross.currentPlayer).toEqual('X')
+    expect(board.available(turnOneCross.state).length).toEqual(7)
+  })
 })
