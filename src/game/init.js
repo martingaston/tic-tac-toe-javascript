@@ -8,6 +8,7 @@ module.exports = () => ({
     title: messages.title(),
     intro: messages.intro(),
     instructions: messages.instructions(),
+    turn: messages.turn('X'),
   },
   currentPlayer: 'X',
 })

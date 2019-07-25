@@ -1,18 +1,22 @@
 const display = require('./display')
 const getMove = require('./getMove')
-const update = require('./update')
+const gameOver = require('./gameOver')
+const game = require('../game')
 
-module.exports = async (options, io) => {
+const makeMove = async (options, io) => {
   const { isActive, state, messages } = options
   const { input, output, write } = io
 
   if (!isActive) {
-    return write('What a good game!')
+    return gameOver(options, io)
   }
 
-  write(display.board(state))
+  const newline = '\n'
+  write(newline + display.board(state) + newline)
 
   const position = await getMove(input, output, messages.turn)
 
-  update(position, options, io)
+  makeMove(game.update(position, options), io)
 }
+
+module.exports = makeMove
