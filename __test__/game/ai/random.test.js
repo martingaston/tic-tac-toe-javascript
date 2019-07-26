@@ -1,4 +1,4 @@
-const random = require('../../../src/game/ai/random')
+const random = require('../../../src/game/ai/randomPlayer')
 const board = require('../../../src/game/board')
 
 describe('The random computer AI', () => {
