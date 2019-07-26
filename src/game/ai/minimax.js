@@ -1,4 +1,13 @@
 const board = require('../board')
+const {
+  bestPositionReducer,
+  maximumReducer,
+  minimumReducer,
+} = require('./minimaxReducers')
+
+const WINNING_SCORE = 10
+const LOSING_SCORE = -10
+const DRAW_SCORE = 0
 
 const initialise = (state, maximisingPlayer) => {
   if (board.available(state).length === 0) {
@@ -13,24 +22,16 @@ const initialise = (state, maximisingPlayer) => {
       position,
       scoreMax(board.update(state, position, players.maximiser), players),
     ])
-    .reduce(
-      (maximum, currentPosition) => {
-        const position = currentPosition[0]
-        const value = currentPosition[1]
-
-        return value > maximum.value ? { position, value } : maximum
-      },
-      { position: null, value: -100000 }
-    )
+    .reduce(bestPositionReducer, { position: null, value: -100000 })
 }
 
 const scoreMax = (state, players) => {
   if (board.hasWinner(state)) {
-    return 10 + board.available(state).length
+    return WINNING_SCORE + board.available(state).length
   }
 
   if (board.available(state).length === 0) {
-    return 0
+    return DRAW_SCORE
   }
 
   const scores = board
@@ -38,18 +39,18 @@ const scoreMax = (state, players) => {
     .map(position =>
       scoreMin(board.update(state, position, players.minimiser), players)
     )
-    .reduce((acc, x) => (x < acc ? x : acc), +1000)
+    .reduce(minimumReducer, +1000)
 
   return scores
 }
 
 const scoreMin = (state, players) => {
   if (board.hasWinner(state)) {
-    return -10 - board.available(state).length
+    return LOSING_SCORE - board.available(state).length
   }
 
   if (board.available(state).length === 0) {
-    return 0
+    return DRAW_SCORE
   }
 
   const scores = board
@@ -57,7 +58,7 @@ const scoreMin = (state, players) => {
     .map(position =>
       scoreMax(board.update(state, position, players.maximiser), players)
     )
-    .reduce((acc, x) => (x > acc ? x : acc), -1000)
+    .reduce(maximumReducer, -1000)
 
   return scores
 }
