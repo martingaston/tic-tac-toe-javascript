@@ -1,6 +1,6 @@
 const board = require('./board')
 const messages = require('./messages')
-const random = require('./ai/random')
+const minimax = require('./ai/minimaxPlayer')
 
 const swapPlayer = currentPlayer => (currentPlayer === 'X' ? 'O' : 'X')
 
@@ -21,7 +21,7 @@ const update = (position, options) => {
 
   if (options.mode === 'ai' && swapPlayer(options.currentPlayer) === 'O') {
     return update(
-      random.chooseMove(board, newState),
+      minimax.chooseMove(board, newState),
       nextMove(newState, options)
     )
   }
