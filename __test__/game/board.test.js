@@ -1,4 +1,4 @@
-const board = require('../src/board')
+const board = require('../../src/game/board')
 
 describe('The board class', () => {
   describe('With board.newState()', () => {

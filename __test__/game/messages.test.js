@@ -1,4 +1,4 @@
-const messages = require('../src/messages.js')
+const messages = require('../../src/game/messages')
 
 describe('A messages object', () => {
   it('should have a title', () => {

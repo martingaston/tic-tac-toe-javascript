@@ -1,5 +1,5 @@
-const display = require('../src/display')
-const board = require('../src/board')
+const display = require('../../src/cli/display')
+const board = require('../../src/game/board')
 
 describe('the display functions', () => {
   it('can display an empty board', () => {
@@ -12,7 +12,7 @@ describe('the display functions', () => {
 | 7 | 8 | 9 |
 +-----------+`
 
-    expect(display.board(state, board)).toEqual(expected)
+    expect(display.board(state)).toEqual(expected)
   })
   it('can display an board with moves played', () => {
     const state = board.newState()
@@ -27,6 +27,6 @@ describe('the display functions', () => {
 | 7 | 8 | X |
 +-----------+`
 
-    expect(display.board(thirdMove, board)).toEqual(expected)
+    expect(display.board(thirdMove)).toEqual(expected)
   })
 })

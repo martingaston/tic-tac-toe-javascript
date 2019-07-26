@@ -56,8 +56,8 @@ const available = board => {
 
 module.exports = {
   newState,
-  update,
   get,
+  update,
   hasWinner,
   available,
 }

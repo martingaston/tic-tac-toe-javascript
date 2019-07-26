@@ -9,6 +9,6 @@ module.exports = {
   occupied: () => 'Dang - your opponent got there before you!',
   winner: mark => `Player ${mark} wins!`,
   draw: () => "How unsatisfying! It's a draw!",
-  turn: mark => `Player ${mark}'s turn:`,
+  turn: mark => `Player ${mark}'s turn: `,
   unknownError: () => "Well, something's gone wrong somewhere.",
 }
