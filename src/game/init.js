@@ -1,7 +1,7 @@
 const messages = require('./messages')
 const board = require('./board')
 
-module.exports = () => ({
+module.exports = (mode = 'human') => ({
   isActive: true,
   state: board.newState(),
   messages: {
@@ -11,4 +11,5 @@ module.exports = () => ({
     turn: messages.turn('X'),
   },
   currentPlayer: 'X',
+  mode,
 })

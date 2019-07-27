@@ -34,21 +34,21 @@ describe('the makeMove function', () => {
   })
 
   it('draws the board', () => {
-    makeMove(options, io)
+    makeMove(options, game.update, io)
     expect(write).toHaveBeenCalled()
   })
 
   it('calls gameOver if the game is finished', () => {
     options.isActive = false
 
-    makeMove(options, io)
+    makeMove(options, game.update, io)
     expect(gameOver).toHaveBeenCalled()
   })
 
   it('will call itself recursively until the game is over', async () => {
     const userInput = '5'
     getMove.mockResolvedValue(userInput)
-    await makeMove(options, io)
+    await makeMove(options, game.update, io)
     expect(gameOver).toHaveBeenCalled()
   })
 })

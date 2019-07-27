@@ -1,6 +1,6 @@
 const makeMove = require('./makeMove')
 
-const start = (options, io) => {
+const start = (options, updater, io) => {
   const { messages } = options
   const { write } = io
 
@@ -8,7 +8,7 @@ const start = (options, io) => {
   write(messages.intro)
   write(messages.instructions)
 
-  makeMove(options, io)
+  makeMove(options, updater, io)
 }
 
 module.exports = start
