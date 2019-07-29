@@ -11,7 +11,7 @@ const getValidatedMove = async (board, message, io) => {
     return getValidatedMove(board, validated.message, io)
   }
 
-  return position
+  return Number.parseInt(position)
 }
 
 module.exports = getValidatedMove
