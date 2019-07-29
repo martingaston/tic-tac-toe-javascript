@@ -3,10 +3,10 @@ const getMove = require('./getMove')
 const gameOver = require('./gameOver')
 
 const play = async (options, updater, io) => {
-  const { isActive, state, messages } = options
+  const { state, messages } = options
   const { input, output, write } = io
 
-  if (!isActive) {
+  if (gameIsOver(options)) {
     return gameOver(options, io)
   }
 
@@ -16,5 +16,7 @@ const play = async (options, updater, io) => {
 
   play(updater(position, options), updater, io)
 }
+
+const gameIsOver = ({ isActive }) => !isActive
 
 module.exports = play
