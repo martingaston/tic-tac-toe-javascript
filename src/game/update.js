@@ -1,42 +1,46 @@
-const board = require('./board')
+const referee = require('./referee')
 const messages = require('./messages')
 const minimax = require('./ai/minimaxPlayer')
 
 const swapPlayer = currentPlayer => (currentPlayer === 'X' ? 'O' : 'X')
 
-const getEndingMessage = (state, currentPlayer) => {
-  if (board.hasWinner(state)) {
+const getEndingMessage = (board, currentPlayer) => {
+  if (referee.hasWinner(board)) {
     return messages.winner(currentPlayer)
   }
 
-  return messages.draw()
+  return messages.draw
 }
 
 const update = (position, options) => {
-  const newState = board.update(options.state, position, options.currentPlayer)
+  const updatedBoard = referee.update(
+    options.board,
+    position,
+    options.currentPlayer
+  )
 
-  if (gameIsOver(newState)) {
-    return gameOver(newState, options.currentPlayer)
+  if (gameIsOver(updatedBoard)) {
+    return gameOver(updatedBoard, options.currentPlayer)
   }
 
   if (options.mode === 'ai' && swapPlayer(options.currentPlayer) === 'O') {
     return update(
-      minimax.chooseMove(board, newState),
-      nextMove(newState, options)
+      minimax.chooseMove(referee, updatedBoard),
+      nextMove(updatedBoard, options)
     )
   }
 
-  return nextMove(newState, options)
+  return nextMove(updatedBoard, options)
 }
 
-const gameIsOver = state =>
-  board.hasWinner(state) || board.available(state).length <= 0
+const gameIsOver = board =>
+  referee.hasWinner(board) || referee.available(board).length <= 0
 
-const nextMove = (state, options) => {
+const nextMove = (board, options) => {
   const nextPlayer = swapPlayer(options.currentPlayer)
   return {
     ...options,
-    state,
+    board,
     currentPlayer: nextPlayer,
     isActive: true,
     messages: {
@@ -45,11 +49,11 @@ const nextMove = (state, options) => {
   }
 }
 
-const gameOver = (state, currentPlayer) => ({
-  state,
+const gameOver = (board, currentPlayer) => ({
+  board,
   isActive: false,
   messages: {
-    ending: getEndingMessage(state, currentPlayer),
+    ending: getEndingMessage(board, currentPlayer),
   },
 })
 

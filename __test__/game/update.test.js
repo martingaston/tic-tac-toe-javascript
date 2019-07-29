@@ -1,15 +1,15 @@
 const update = require('../../src/game/update')
-const board = require('../../src/game/board')
+const referee = require('../../src/game/referee')
 const game = require('../../src/game')
 
 describe('the update function', () => {
-  it('updates the board state', () => {
+  it('updates the board', () => {
     const options = game.init()
     const position = 1
 
-    const { state } = update(position, options)
+    const { board } = update(position, options)
 
-    expect(board.get(state, position)).toEqual(options.currentPlayer)
+    expect(referee.get(board, position)).toEqual(options.currentPlayer)
   })
 
   it('swaps the players', () => {
@@ -67,6 +67,6 @@ describe('the update function', () => {
     const turnOneCross = update(1, turnZero)
 
     expect(turnOneCross.currentPlayer).toEqual('X')
-    expect(board.available(turnOneCross.state).length).toEqual(7)
+    expect(referee.available(turnOneCross.board).length).toEqual(7)
   })
 })

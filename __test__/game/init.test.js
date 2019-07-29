@@ -6,8 +6,8 @@ describe('the game initialiser', () => {
     expect(newGame.isActive).toEqual(true)
   })
 
-  it('has a board state', () => {
-    expect(newGame.state).toBeDefined()
+  it('has a board', () => {
+    expect(newGame.board).toBeDefined()
   })
 
   it('contains the game messages', () => {

@@ -1,4 +1,4 @@
-const newState = (totalSquares = '9') => {
+const create = (totalSquares = '9') => {
   const emptySquare = null
   return Array.from({ length: totalSquares }).fill(emptySquare)
 }
@@ -55,7 +55,7 @@ const available = board => {
 }
 
 module.exports = {
-  newState,
+  create,
   get,
   update,
   hasWinner,
