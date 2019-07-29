@@ -1,4 +1,4 @@
-const makeMove = require('./makeMove')
+const play = require('./play')
 
 const start = (options, updater, io) => {
   const { messages } = options
@@ -8,7 +8,7 @@ const start = (options, updater, io) => {
   write(messages.intro)
   write(messages.instructions)
 
-  makeMove(options, updater, io)
+  play(options, updater, io)
 }
 
 module.exports = start

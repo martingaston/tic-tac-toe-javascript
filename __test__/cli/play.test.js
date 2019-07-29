@@ -1,4 +1,4 @@
-const makeMove = require('../../src/cli/makeMove')
+const play = require('../../src/cli/play')
 const gameOver = require('../../src/cli/gameOver')
 const getMove = require('../../src/cli/getMove')
 const game = require('../../src/game')
@@ -34,21 +34,21 @@ describe('the makeMove function', () => {
   })
 
   it('draws the board', () => {
-    makeMove(options, game.update, io)
+    play(options, game.update, io)
     expect(write).toHaveBeenCalled()
   })
 
   it('calls gameOver if the game is finished', () => {
     options.isActive = false
 
-    makeMove(options, game.update, io)
+    play(options, game.update, io)
     expect(gameOver).toHaveBeenCalled()
   })
 
   it('will call itself recursively until the game is over', async () => {
     const userInput = '5'
     getMove.mockResolvedValue(userInput)
-    await makeMove(options, game.update, io)
+    await play(options, game.update, io)
     expect(gameOver).toHaveBeenCalled()
   })
 })

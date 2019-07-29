@@ -1,7 +1,7 @@
 const start = require('../../src/cli/index')
-const makeMove = require('../../src/cli/makeMove')
+const play = require('../../src/cli/play')
 
-jest.mock('../../src/cli/makeMove')
+jest.mock('../../src/cli/play')
 
 describe('the start function', () => {
   let options, write, updater, io
@@ -30,6 +30,6 @@ describe('the start function', () => {
 
   it('calls makeMove with three arguments', () => {
     start(options, updater, io)
-    expect(makeMove).toHaveBeenCalledWith(options, updater, io)
+    expect(play).toHaveBeenCalledWith(options, updater, io)
   })
 })
