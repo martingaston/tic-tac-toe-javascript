@@ -1,4 +1,4 @@
-const getMove = require('../../src/cli/getMove')
+const getInput = require('../../src/cli/getInput')
 const Readable = require('stream').Readable
 
 const spy = jest.fn()
@@ -8,12 +8,12 @@ const mockReadable = new Readable({
   },
 })
 
-describe('the getMove function', () => {
+describe('the getInput function', () => {
   it('can get user input', async () => {
     spy.mockReturnValueOnce('hello 1\n')
-    const firstResult = await getMove(mockReadable, null)
+    const firstResult = await getInput(mockReadable, null)
     spy.mockReturnValueOnce('hello 2\n')
-    const secondResult = await getMove(mockReadable, null)
+    const secondResult = await getInput(mockReadable, null)
 
     expect(firstResult).toBe('hello 1')
     expect(secondResult).toBe('hello 2')
