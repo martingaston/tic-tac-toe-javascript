@@ -2,6 +2,7 @@ const play = require('../../src/cli/play')
 const gameOver = require('../../src/cli/gameOver')
 const getMove = require('../../src/cli/getMove')
 const game = require('../../src/game')
+const referee = require('../../src/game/referee')
 
 jest.mock('../../src/game')
 jest.mock('../../src/cli/gameOver')
@@ -14,7 +15,7 @@ describe('the makeMove function', () => {
 
     game.init.mockReturnValue({
       isActive: true,
-      board: [],
+      board: referee.create(),
       messages: {
         turn: 'test',
       },
@@ -22,6 +23,10 @@ describe('the makeMove function', () => {
 
     game.update.mockReturnValue({
       isActive: false,
+    })
+
+    game.validator.mockReturnValue({
+      status: 'ok',
     })
 
     options = game.init()

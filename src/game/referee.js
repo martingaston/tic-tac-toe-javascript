@@ -54,10 +54,13 @@ const available = board => {
   )
 }
 
+const withinBounds = (number, board) => number > 0 && number <= board.length
+
 module.exports = {
   create,
   get,
   update,
   hasWinner,
+  withinBounds,
   available,
 }
