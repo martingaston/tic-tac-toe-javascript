@@ -5,9 +5,9 @@ module.exports = (mode = 'human') => ({
   isActive: true,
   board: referee.create(),
   messages: {
-    title: messages.title(),
-    intro: messages.intro(),
-    instructions: messages.instructions(),
+    title: messages.title,
+    intro: messages.intro,
+    instructions: messages.instructions,
     turn: messages.turn('X'),
   },
   currentPlayer: 'X',

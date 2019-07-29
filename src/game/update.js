@@ -9,7 +9,7 @@ const getEndingMessage = (board, currentPlayer) => {
     return messages.winner(currentPlayer)
   }
 
-  return messages.draw()
+  return messages.draw
 }
 
 const update = (position, options) => {
