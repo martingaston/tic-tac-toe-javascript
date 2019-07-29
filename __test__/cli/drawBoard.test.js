@@ -1,9 +1,9 @@
 const drawBoard = require('../../src/cli/drawBoard')
-const board = require('../../src/game/board')
+const referee = require('../../src/game/referee')
 
 describe('the display functions', () => {
   it('can display an empty board', () => {
-    const state = board.newState()
+    const board = referee.create()
     const expected = `\n+-----------+
 | 1 | 2 | 3 |
 +-----------+
@@ -12,13 +12,13 @@ describe('the display functions', () => {
 | 7 | 8 | 9 |
 +-----------+\n`
 
-    expect(drawBoard(state)).toEqual(expected)
+    expect(drawBoard(board)).toEqual(expected)
   })
-  it('can display an board with moves played', () => {
-    const state = board.newState()
-    const firstMove = board.update(state, 1, 'X')
-    const secondMove = board.update(firstMove, 5, 'O')
-    const thirdMove = board.update(secondMove, 9, 'X')
+  it('can display a boardwith moves played', () => {
+    const board = referee.create()
+    const firstMove = referee.update(board, 1, 'X')
+    const secondMove = referee.update(firstMove, 5, 'O')
+    const thirdMove = referee.update(secondMove, 9, 'X')
     const expected = `\n+-----------+
 | X | 2 | 3 |
 +-----------+

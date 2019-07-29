@@ -1,9 +1,9 @@
 const drawBoard = require('./drawBoard')
 
 module.exports = (options, io) => {
-  const { state, messages } = options
+  const { board, messages } = options
   const { write } = io
 
-  write(drawBoard(state))
+  write(drawBoard(board))
   write(messages.ending)
 }

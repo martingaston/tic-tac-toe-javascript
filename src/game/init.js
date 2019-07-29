@@ -1,9 +1,9 @@
 const messages = require('./messages')
-const board = require('./board')
+const referee = require('./referee')
 
 module.exports = (mode = 'human') => ({
   isActive: true,
-  state: board.newState(),
+  board: referee.create(),
   messages: {
     title: messages.title(),
     intro: messages.intro(),

@@ -1,4 +1,4 @@
-const board = require('../board')
+const referee = require('../referee')
 const {
   bestPositionReducer,
   maximumReducer,
@@ -9,54 +9,54 @@ const WINNING_SCORE = 10
 const LOSING_SCORE = -10
 const DRAW_SCORE = 0
 
-const initialise = (state, maximisingPlayer) => {
-  if (board.available(state).length === 0) {
-    throw new TypeError('Must supply a board state that is not full')
+const initialise = (board, maximisingPlayer) => {
+  if (referee.available(board).length === 0) {
+    throw new TypeError('Must supply a board board that is not full')
   }
 
   const players = calculatePlayers(maximisingPlayer)
 
-  return board
-    .available(state)
+  return referee
+    .available(board)
     .map(position => [
       position,
-      scoreMax(board.update(state, position, players.maximiser), players),
+      scoreMax(referee.update(board, position, players.maximiser), players),
     ])
     .reduce(bestPositionReducer, { position: null, value: -100000 })
 }
 
-const scoreMax = (state, players) => {
-  if (board.hasWinner(state)) {
-    return WINNING_SCORE + board.available(state).length
+const scoreMax = (board, players) => {
+  if (referee.hasWinner(board)) {
+    return WINNING_SCORE + referee.available(board).length
   }
 
-  if (board.available(state).length === 0) {
+  if (referee.available(board).length === 0) {
     return DRAW_SCORE
   }
 
-  const scores = board
-    .available(state)
+  const scores = referee
+    .available(board)
     .map(position =>
-      scoreMin(board.update(state, position, players.minimiser), players)
+      scoreMin(referee.update(board, position, players.minimiser), players)
     )
     .reduce(minimumReducer, +1000)
 
   return scores
 }
 
-const scoreMin = (state, players) => {
-  if (board.hasWinner(state)) {
-    return LOSING_SCORE - board.available(state).length
+const scoreMin = (board, players) => {
+  if (referee.hasWinner(board)) {
+    return LOSING_SCORE - referee.available(board).length
   }
 
-  if (board.available(state).length === 0) {
+  if (referee.available(board).length === 0) {
     return DRAW_SCORE
   }
 
-  const scores = board
-    .available(state)
+  const scores = referee
+    .available(board)
     .map(position =>
-      scoreMax(board.update(state, position, players.maximiser), players)
+      scoreMax(referee.update(board, position, players.maximiser), players)
     )
     .reduce(maximumReducer, -1000)
 

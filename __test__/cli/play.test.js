@@ -14,7 +14,7 @@ describe('the makeMove function', () => {
 
     game.init.mockReturnValue({
       isActive: true,
-      state: [],
+      board: [],
       messages: {
         turn: 'test',
       },

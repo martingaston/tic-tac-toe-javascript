@@ -1,68 +1,68 @@
 const minimax = require('../../../src/game/ai/minimax')
-const board = require('../../../src/game/board')
+const referee = require('../../../src/game/referee')
 
 describe('the minimax algorithm', () => {
-  let state
+  let board
   beforeEach(() => {
-    state = board.newState()
+    board = referee.create()
   })
 
   it('throws an error if the board is full', () => {
-    state = board.update(state, 1, 'X')
-    state = board.update(state, 2, 'O')
-    state = board.update(state, 3, 'X')
-    state = board.update(state, 4, 'X')
-    state = board.update(state, 5, 'O')
-    state = board.update(state, 6, 'O')
-    state = board.update(state, 7, 'O')
-    state = board.update(state, 8, 'X')
-    state = board.update(state, 9, 'X')
+    board = referee.update(board, 1, 'X')
+    board = referee.update(board, 2, 'O')
+    board = referee.update(board, 3, 'X')
+    board = referee.update(board, 4, 'X')
+    board = referee.update(board, 5, 'O')
+    board = referee.update(board, 6, 'O')
+    board = referee.update(board, 7, 'O')
+    board = referee.update(board, 8, 'X')
+    board = referee.update(board, 9, 'X')
 
-    expect(() => minimax(state, 'X')).toThrow(TypeError)
+    expect(() => minimax(board, 'X')).toThrow(TypeError)
   })
 
   it('returns the last move left on the board if one move is available', () => {
-    state = board.update(state, 1, 'X')
-    state = board.update(state, 2, 'O')
-    state = board.update(state, 3, 'X')
-    state = board.update(state, 4, 'X')
-    state = board.update(state, 5, 'O')
-    state = board.update(state, 6, 'O')
-    state = board.update(state, 7, 'O')
-    state = board.update(state, 8, 'X')
+    board = referee.update(board, 1, 'X')
+    board = referee.update(board, 2, 'O')
+    board = referee.update(board, 3, 'X')
+    board = referee.update(board, 4, 'X')
+    board = referee.update(board, 5, 'O')
+    board = referee.update(board, 6, 'O')
+    board = referee.update(board, 7, 'O')
+    board = referee.update(board, 8, 'X')
     const position = 9
 
-    expect(minimax(state, 'X').position).toEqual(position)
+    expect(minimax(board, 'X').position).toEqual(position)
   })
 
   it('chooses a win over a draw with two squares available', () => {
-    state = board.update(state, 1, 'X')
-    state = board.update(state, 2, 'O')
-    state = board.update(state, 3, 'X')
-    state = board.update(state, 4, 'X')
-    state = board.update(state, 6, 'O')
-    state = board.update(state, 7, 'O')
-    state = board.update(state, 9, 'X')
+    board = referee.update(board, 1, 'X')
+    board = referee.update(board, 2, 'O')
+    board = referee.update(board, 3, 'X')
+    board = referee.update(board, 4, 'X')
+    board = referee.update(board, 6, 'O')
+    board = referee.update(board, 7, 'O')
+    board = referee.update(board, 9, 'X')
     const position = 5
 
-    expect(minimax(state, 'X').position).toEqual(position)
+    expect(minimax(board, 'X').position).toEqual(position)
   })
 
   it('avoids a loss', () => {
-    state = board.update(state, 1, 'X')
-    state = board.update(state, 2, 'X')
-    state = board.update(state, 3, 'O')
-    state = board.update(state, 5, 'O')
+    board = referee.update(board, 1, 'X')
+    board = referee.update(board, 2, 'X')
+    board = referee.update(board, 3, 'O')
+    board = referee.update(board, 5, 'O')
     const position = 7
 
-    expect(minimax(state, 'X').position).toEqual(position)
+    expect(minimax(board, 'X').position).toEqual(position)
   })
 
   it('works with both X and O marks as the maximising player', () => {
-    state = board.update(state, 1, 'O')
-    state = board.update(state, 2, 'O')
+    board = referee.update(board, 1, 'O')
+    board = referee.update(board, 2, 'O')
     const noughtWinningValue = 16
 
-    expect(minimax(state, 'O').value).toEqual(noughtWinningValue)
+    expect(minimax(board, 'O').value).toEqual(noughtWinningValue)
   })
 })

@@ -1,20 +1,20 @@
 const { get } = require('./utils/state')
 
-module.exports = state =>
+module.exports = board =>
   [
     '',
     divider,
-    generateRow(state, [1, 2, 3]),
+    generateRow(board, [1, 2, 3]),
     divider,
-    generateRow(state, [4, 5, 6]),
+    generateRow(board, [4, 5, 6]),
     divider,
-    generateRow(state, [7, 8, 9]),
+    generateRow(board, [7, 8, 9]),
     divider,
     '',
   ].join('\n')
 
-const generateRow = (state, squares) => {
-  const generateSquare = position => get(state, position)
+const generateRow = (board, squares) => {
+  const generateSquare = position => get(board, position)
 
   return (
     '| ' +
