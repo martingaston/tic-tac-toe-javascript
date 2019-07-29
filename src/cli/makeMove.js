@@ -1,4 +1,4 @@
-const display = require('./display')
+const drawBoard = require('./drawBoard')
 const getMove = require('./getMove')
 const gameOver = require('./gameOver')
 
@@ -10,8 +10,7 @@ const makeMove = async (options, updater, io) => {
     return gameOver(options, io)
   }
 
-  const newline = '\n'
-  write(newline + display.board(state) + newline)
+  write(drawBoard(state))
 
   const position = await getMove(input, output, messages.turn)
 
