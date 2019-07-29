@@ -1,7 +1,7 @@
 const drawBoard = require('./drawBoard')
 
-module.exports = (options, io) => {
-  const { board, messages } = options
+module.exports = (game, io) => {
+  const { board, messages } = game
   const { write } = io
 
   write(drawBoard(board))

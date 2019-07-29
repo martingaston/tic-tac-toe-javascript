@@ -1,14 +1,14 @@
 const play = require('./play')
 
-const start = (options, io) => {
-  const { messages } = options
+const start = (game, io) => {
+  const { messages } = game
   const { write } = io
 
   write(messages.title)
   write(messages.intro)
   write(messages.instructions)
 
-  play(options, io)
+  play(game, io)
 }
 
 module.exports = start
