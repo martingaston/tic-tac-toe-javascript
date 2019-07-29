@@ -1,6 +1,6 @@
 const play = require('./play')
 
-const start = (options, updater, io) => {
+const start = (options, io) => {
   const { messages } = options
   const { write } = io
 
@@ -8,7 +8,7 @@ const start = (options, updater, io) => {
   write(messages.intro)
   write(messages.instructions)
 
-  play(options, updater, io)
+  play(options, io)
 }
 
 module.exports = start

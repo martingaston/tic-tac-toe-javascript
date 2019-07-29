@@ -2,7 +2,9 @@ const drawBoard = require('./drawBoard')
 const getMove = require('./getMove')
 const gameOver = require('./gameOver')
 
-const play = async (options, updater, io) => {
+const { update } = require('../game/')
+
+const play = async (options, io) => {
   const { board, messages } = options
   const { input, output, write } = io
 
@@ -14,7 +16,7 @@ const play = async (options, updater, io) => {
 
   const position = await getMove(input, output, messages.turn)
 
-  play(updater(position, options), updater, io)
+  play(update(position, options), io)
 }
 
 const gameIsOver = ({ isActive }) => !isActive
