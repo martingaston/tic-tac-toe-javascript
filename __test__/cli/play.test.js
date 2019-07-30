@@ -1,20 +1,21 @@
 const play = require('../../src/cli/play')
 const gameOver = require('../../src/cli/gameOver')
-const getMove = require('../../src/cli/getMove')
+const getMove = require('../../src/cli/getInput')
 const game = require('../../src/game')
+const referee = require('../../src/game/referee')
 
 jest.mock('../../src/game')
 jest.mock('../../src/cli/gameOver')
-jest.mock('../../src/cli/getMove')
+jest.mock('../../src/cli/getInput')
 
-describe('the makeMove function', () => {
+describe('the play function', () => {
   let options, write, io
   beforeEach(() => {
     jest.resetAllMocks()
 
     game.init.mockReturnValue({
       isActive: true,
-      board: [],
+      board: referee.create(),
       messages: {
         turn: 'test',
       },
@@ -22,6 +23,10 @@ describe('the makeMove function', () => {
 
     game.update.mockReturnValue({
       isActive: false,
+    })
+
+    game.validator.mockReturnValue({
+      status: 'ok',
     })
 
     options = game.init()
